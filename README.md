@@ -73,6 +73,19 @@ After build, you'll have an executable (EtherCollect or EtherCollect.exe).
 
 ## On Windows, use backslashes and .exe:
 
+```powershell
+EtherCollect.exe ^
+  --input addresses.txt ^
+  --output balances.csv ^
+  --format csv ^
+  --api-keys "key1,key2" ^
+  --batch-size 20 ^
+  --rate 2.0 ^
+  --resume
+```
+
+## Flags
+
 | Flag             | Description                                                            | Default       |
 | ---------------- | ---------------------------------------------------------------------- | ------------- |
 | --input          | Input file (one address per line) or - for stdin                       | required      |
