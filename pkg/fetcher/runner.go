@@ -31,7 +31,7 @@ func Run(cfg Config) error {
 	defer cp.Close()
 
 	// Setup Etherscan client
-	client := NewEtherscanClient(cfg.APIKeys)
+	client := NewEtherscanClient(cfg.APIKeys, "1") // Default to chainID "1" (Ethereum mainnet) for now ; can be made configurable if needed
 	rl := NewRateLimiter(cfg.RateRPS)
 	defer rl.Stop()
 
