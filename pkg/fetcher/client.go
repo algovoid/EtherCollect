@@ -14,10 +14,13 @@ import (
 const EtherscanBase = "https://api.etherscan.io/v2/api"
 
 type EtherscanClient struct {
-	Keys       []string
-	keyIndex   int
+	Keys     []string
+	keyIndex int
+	// New: chain identifier ("1" for Ethereum mainnet)
+	// This is required for Etherscan API v2 to specify the chain context.
+	// will probably be made an argument instead of hardcoded in the future if we want to support multiple chains.
+	ChainID    string
 	httpClient *http.Client
-	// rate limiter provided by caller
 }
 
 type balanceResult struct {
@@ -31,10 +34,12 @@ type apiResponse struct {
 	Result  json.RawMessage `json:"result"`
 }
 
-func NewEtherscanClient(keys []string) *EtherscanClient {
+// NewEtherscanClient now requires a chainID.
+func NewEtherscanClient(keys []string, chainID string) *EtherscanClient {
 	return &EtherscanClient{
 		Keys:       keys,
 		keyIndex:   0,
+		ChainID:    chainID,
 		httpClient: &http.Client{Timeout: 60 * time.Second},
 	}
 }
@@ -49,9 +54,10 @@ func (c *EtherscanClient) rotateKey() string {
 	return k
 }
 
-// BuildBalancemultiURL constructs the URL for balancemulti call.
-func BuildBalancemultiURL(addrs []string, apiKey string) string {
+// BuildBalancemultiURL now includes the chainid parameter.
+func (c *EtherscanClient) BuildBalancemultiURL(addrs []string, apiKey string) string {
 	q := url.Values{}
+	q.Set("chainid", c.ChainID) //required for V2
 	q.Set("module", "account")
 	q.Set("action", "balancemulti")
 	q.Set("address", strings.Join(addrs, ","))
@@ -63,7 +69,7 @@ func BuildBalancemultiURL(addrs []string, apiKey string) string {
 // FetchBalances calls balancemulti and decodes results.
 func (c *EtherscanClient) FetchBalances(ctx context.Context, addrs []string) (map[string]string, error) {
 	apiKey := c.rotateKey()
-	u := BuildBalancemultiURL(addrs, apiKey)
+	u := c.BuildBalancemultiURL(addrs, apiKey) //use method on client
 
 	req, err := http.NewRequestWithContext(ctx, "GET", u, nil)
 	if err != nil {
