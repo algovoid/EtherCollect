@@ -2,7 +2,7 @@
 
 Lightweight CLI tool to fetch Ethereum ETH balances for large lists of wallet addresses using the Etherscan API (balancemulti), built in Go. Designed for large inputs, respects free-tier rate limits, supports multiple API key rotation, and persists progress in a SQLite checkpoint for resumability.
 
-Works on **Linux, macOS, and Windows**. (tested on linux and windows only)
+Works on **Linux and Windows**.
 
 ## Features
 
