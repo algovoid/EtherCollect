@@ -235,7 +235,7 @@ $env:ETHERSCAN_API_KEYS="key1,key2"
 4. Writes results immediately to output file and to SQLite checkpoint for resumability.
 5. Retries transient errors with exponential backoff and jitter.
 
-## Notes & Next steps
+## Notes
 
 - If you want token balances, or historical balances at a particular block, or to run faster for millions of addresses, consider a paid Etherscan plan or running an archive node / indexer.
 - You can run multiple instances each with different API keys and a shared checkpoint DB for parallelism (careful with DB locking).
