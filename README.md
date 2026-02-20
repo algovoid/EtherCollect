@@ -26,11 +26,6 @@ Works on **Linux and Windows**.
 - Go 1.20+
 - CGO enabled for `github.com/mattn/go-sqlite3` (default on most Linux/macOS setups).
 
-```bash
-git clone github.com/algovoid/EtherCollect.git
-cd EtherCollect
-go build -o EtherCollect ./cmd/EtherCollect
-```
 
 ### Build instructions
 
