@@ -23,7 +23,7 @@ Works on **Linux and Windows**.
 
 ## Build & Requirements
 
-- Go 1.20+
+- Go 1.26+
 - CGO enabled for `github.com/mattn/go-sqlite3` (default on most Linux/macOS setups).
 
 
